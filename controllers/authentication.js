@@ -41,7 +41,6 @@ const signup = (req, res, next) => {
             }
 
             // Respond that user was created
-            console.log('DIS HERE NEW USER', newUser);
             res.json({token: createUserToken(newUser)});
         });
 
@@ -50,7 +49,6 @@ const signup = (req, res, next) => {
 
 //We can access the user through req.user. Passport attaches the user to req for us.
 const signin = (req, res, next) => {
-    console.log('DIS HERE EXISTING USER', req.user);
     res.send({token: createUserToken(req.user)});
 };
 
