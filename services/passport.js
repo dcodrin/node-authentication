@@ -2,9 +2,9 @@ const passport = require('passport');
 const UserModel = require('../models/user');
 const config = require('../config');
 
-//jwt strategy
+//jwt strategy for route authentication
 const JwtStrategy = require('passport-jwt').Strategy;
-//local strategy
+//local strategy for signins
 const LocalStrategy = require('passport-local');
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
@@ -17,7 +17,7 @@ const jwtOptions = {
 
 //Create local strategy
 
-//Overwrite the default passport field that expects a username (we use email)
+//Overwrite the default passport field that expects a username (we use email), password stays the same
 const usernameField = 'email';
 const localLogin = new LocalStrategy({usernameField}, (email, password, done) => {
 
@@ -39,14 +39,10 @@ const localLogin = new LocalStrategy({usernameField}, (email, password, done) =>
             if(!match) {
                 return done(null, false);
             }
-
+            //If match === true
             return done(null, user);
         });
     });
-
-    //If correct call done with user
-
-    //Else call done with false; done(false)
 });
 
 //Create jwt strategy
@@ -68,8 +64,6 @@ const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
             return done(null, false);
         }
     });
-
-    //If not call done without any data
 });
 
 //Tell passport to use the strategy
